@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'feed_provider.dart';
 
 class FeedScreen extends ConsumerWidget {
@@ -36,9 +37,8 @@ class FeedScreen extends ConsumerWidget {
                     trailing: IconButton(
                       icon: const Icon(Icons.arrow_forward_ios, size: 16),
                       onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('${item.title} tapped')),
-                        );
+                        // push onto the Feed tab's nested navigator stack
+                        context.pushNamed('feed_item', params: {'id': item.id});
                       },
                     ),
                   ),
