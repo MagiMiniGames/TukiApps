@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'features/feed/feed_screen.dart';
-import 'features/store/store_screen.dart';
-import 'features/builder/builder_screen.dart';
-import 'features/profile/profile_screen.dart';
 
-class TukiApps extends StatelessWidget {
+class TukiApps extends StatefulWidget {
   const TukiApps({super.key});
+
+  @override
+  State<TukiApps> createState() => _TukiAppsState();
+}
+
+class _TukiAppsState extends State<TukiApps> {
+  int _currentIndex = 0;
+
+  final List<Widget> _screens = const [
+    _PlaceholderScreen(title: 'Feed', subtitle: 'Apps people love'),
+    _PlaceholderScreen(title: 'Store', subtitle: 'Discover beneficial apps'),
+    _PlaceholderScreen(title: 'Builder', subtitle: 'Create with AI'),
+    _PlaceholderScreen(title: 'Profile', subtitle: 'Your creations'),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -21,49 +31,71 @@ class TukiApps extends StatelessWidget {
         textTheme: GoogleFonts.interTextTheme(),
         useMaterial3: true,
       ),
-      home: const AppShell(),
+      home: Scaffold(
+        body: _screens[_currentIndex],
+        bottomNavigationBar: NavigationBar(
+          selectedIndex: _currentIndex,
+          onDestinationSelected: (index) {
+            setState(() => _currentIndex = index);
+          },
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Icons.dynamic_feed_outlined),
+              selectedIcon: Icon(Icons.dynamic_feed),
+              label: 'Feed',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.storefront_outlined),
+              selectedIcon: Icon(Icons.storefront),
+              label: 'Store',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.auto_awesome_outlined),
+              selectedIcon: Icon(Icons.auto_awesome),
+              label: 'Builder',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.person_outline),
+              selectedIcon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
-class AppShell extends StatefulWidget {
-  const AppShell({super.key});
+class _PlaceholderScreen extends StatelessWidget {
+  final String title;
+  final String subtitle;
 
-  @override
-  State<AppShell> createState() => _AppShellState();
-}
-
-class _AppShellState extends State<AppShell> {
-  int _currentIndex = 0;
-
-  static final List<Widget> _pages = <Widget>[
-    const FeedScreen(),
-    const StoreScreen(),
-    const BuilderScreen(),
-    const ProfileScreen(),
-  ];
-
-  void _onTap(int index) {
-    if (_currentIndex == index) return;
-    setState(() => _currentIndex = index);
-  }
+  const _PlaceholderScreen({
+    required this.title,
+    required this.subtitle,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _pages,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: _onTap,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Feed'),
-          BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Store'),
-          BottomNavigationBarItem(icon: Icon(Icons.build), label: 'Builder'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            subtitle,
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey.shade600,
+            ),
+          ),
         ],
       ),
     );
