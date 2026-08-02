@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'features/feed/feed_screen.dart';
+import 'features/store/store_screen.dart';
 
 class TukiApps extends StatefulWidget {
   const TukiApps({super.key});
@@ -14,7 +15,7 @@ class _TukiAppsState extends State<TukiApps> {
 
   final List<Widget> _screens = const [
     FeedScreen(),
-    _PlaceholderScreen(title: 'Store', subtitle: 'Discover beneficial apps'),
+    StoreScreen(),
     _PlaceholderScreen(title: 'Builder', subtitle: 'Create with AI'),
     _PlaceholderScreen(title: 'Profile', subtitle: 'Your creations'),
   ];
