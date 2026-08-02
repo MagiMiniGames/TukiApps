@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/theme/app_theme.dart';
 
 class FeedScreen extends StatelessWidget {
   const FeedScreen({super.key});
@@ -8,28 +9,36 @@ class FeedScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Feed'),
-        centerTitle: true,
-        elevation: 0,
       ),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
         children: const [
-          _AppCard(
+          _FeedCard(
             title: 'Tropical Paradise',
-            subtitle: 'Shared by Lunos',
-            description: 'A calm virtual escape with beautiful visuals and soft sounds.',
+            sharedBy: 'Shared by Lunos',
+            description:
+                'A peaceful virtual escape with calming visuals and soft ambient sounds.',
           ),
-          SizedBox(height: 16),
-          _AppCard(
+          SizedBox(height: 14),
+          _FeedCard(
             title: 'Gratitude Daily',
-            subtitle: 'Shared by Maya',
-            description: 'Simple daily gratitude journal with soft tropical design.',
+            sharedBy: 'Shared by Maya',
+            description:
+                'A gentle daily gratitude practice designed for calm and consistency.',
           ),
-          SizedBox(height: 16),
-          _AppCard(
+          SizedBox(height: 14),
+          _FeedCard(
             title: 'Focus Flow',
-            subtitle: 'Shared by Kai',
-            description: 'Gentle focus timer designed for deep work without pressure.',
+            sharedBy: 'Shared by Kai',
+            description:
+                'Soft focus sessions without pressure or harsh timers.',
+          ),
+          SizedBox(height: 14),
+          _FeedCard(
+            title: 'Breath Space',
+            sharedBy: 'Shared by Aria',
+            description:
+                'Simple guided breathing with beautiful tropical atmospheres.',
           ),
         ],
       ),
@@ -37,57 +46,123 @@ class FeedScreen extends StatelessWidget {
   }
 }
 
-class _AppCard extends StatelessWidget {
+class _FeedCard extends StatelessWidget {
   final String title;
-  final String subtitle;
+  final String sharedBy;
   final String description;
 
-  const _AppCard({
+  const _FeedCard({
     required this.title,
-    required this.subtitle,
+    required this.sharedBy,
     required this.description,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: Colors.grey.shade200),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.all(18),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Title + soft accent
+          Row(
+            children: [
+              Container(
+                width: 8,
+                height: 8,
+                decoration: const BoxDecoration(
+                  color: AppTheme.primary,
+                  shape: BoxShape.circle,
+                ),
               ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              subtitle,
-              style: TextStyle(
-                fontSize: 13,
-                color: Colors.grey.shade600,
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
+            ],
+          ),
+
+          const SizedBox(height: 6),
+
+          Text(
+            sharedBy,
+            style: TextStyle(
+              fontSize: 13,
+              color: Colors.grey.shade600,
             ),
-            const SizedBox(height: 12),
-            Text(
-              description,
-              style: const TextStyle(fontSize: 15),
+          ),
+
+          const SizedBox(height: 12),
+
+          Text(
+            description,
+            style: TextStyle(
+              fontSize: 14.5,
+              height: 1.45,
+              color: Colors.grey.shade800,
             ),
-            const SizedBox(height: 12),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
+          ),
+
+          const SizedBox(height: 16),
+
+          // Actions
+          Row(
+            children: [
+              TextButton.icon(
                 onPressed: () {},
-                child: const Text('View App'),
+                icon: const Icon(Icons.favorite_border, size: 18),
+                label: const Text('Like'),
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.grey.shade700,
+                ),
               ),
-            ),
-          ],
-        ),
+              const SizedBox(width: 8),
+              TextButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.chat_bubble_outline, size: 18),
+                label: const Text('Comment'),
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.grey.shade700,
+                ),
+              ),
+              const Spacer(),
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.primary,
+                  foregroundColor: Colors.white,
+                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text(
+                  'View',
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
