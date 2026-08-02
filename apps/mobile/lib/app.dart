@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'core/theme/app_theme.dart';
 import 'features/feed/feed_screen.dart';
 import 'features/store/store_screen.dart';
+import 'features/builder/builder_screen.dart';
+import 'features/profile/profile_screen.dart';
 
 class TukiApps extends StatefulWidget {
   const TukiApps({super.key});
@@ -16,8 +18,8 @@ class _TukiAppsState extends State<TukiApps> {
   final List<Widget> _screens = const [
     FeedScreen(),
     StoreScreen(),
-    _PlaceholderScreen(title: 'Builder', subtitle: 'Create with AI'),
-    _PlaceholderScreen(title: 'Profile', subtitle: 'Your creations'),
+    BuilderScreen(),
+    ProfileScreen(),
   ];
 
   @override
@@ -25,14 +27,7 @@ class _TukiAppsState extends State<TukiApps> {
     return MaterialApp(
       title: 'TukiApps',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF00B4D8),
-          brightness: Brightness.light,
-        ),
-        textTheme: GoogleFonts.interTextTheme(),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.light(),
       home: Scaffold(
         body: _screens[_currentIndex],
         bottomNavigationBar: NavigationBar(
@@ -63,36 +58,6 @@ class _TukiAppsState extends State<TukiApps> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _PlaceholderScreen extends StatelessWidget {
-  final String title;
-  final String subtitle;
-
-  const _PlaceholderScreen({
-    required this.title,
-    required this.subtitle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            subtitle,
-            style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
-          ),
-        ],
       ),
     );
   }
