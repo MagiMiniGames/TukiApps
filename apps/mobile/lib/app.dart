@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'core/theme/app_theme.dart';
+import 'theme/app_theme.dart';
 import 'features/feed/feed_screen.dart';
 import 'features/store/store_screen.dart';
 import 'features/builder/builder_screen.dart';
@@ -15,11 +15,12 @@ class TukiApps extends StatefulWidget {
 class _TukiAppsState extends State<TukiApps> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = const [
-    FeedScreen(),
-    StoreScreen(),
+  // List is NOT const because BuilderScreen is stateful (non-const).
+  final List<Widget> _screens = [
+    const FeedScreen(),
+    const StoreScreen(),
     BuilderScreen(),
-    ProfileScreen(),
+    const ProfileScreen(),
   ];
 
   @override
