@@ -3,8 +3,11 @@ import 'package:go_router/go_router.dart';
 import 'features/feed/feed_screen.dart';
 import 'features/feed/feed_detail.dart';
 import 'features/store/store_screen.dart';
+import 'features/store/store_detail.dart';
 import 'features/builder/builder_screen.dart';
+import 'features/builder/builder_detail.dart';
 import 'features/profile/profile_screen.dart';
+import 'features/profile/profile_detail.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _feedNavigatorKey = GlobalKey<NavigatorState>();
@@ -99,7 +102,14 @@ final GoRouter router = GoRouter(
               name: 'store',
               builder: (context, state) => const StoreScreen(),
             ),
-            // future: add store detail routes here
+            GoRoute(
+              path: '/store/item/:id',
+              name: 'store_item',
+              builder: (context, state) {
+                final id = state.params['id']!;
+                return StoreDetailScreen(itemId: id);
+              },
+            ),
           ],
         ),
 
@@ -112,6 +122,14 @@ final GoRouter router = GoRouter(
               name: 'builder',
               builder: (context, state) => const BuilderScreen(),
             ),
+            GoRoute(
+              path: '/builder/item/:id',
+              name: 'builder_item',
+              builder: (context, state) {
+                final id = state.params['id']!;
+                return BuilderDetailScreen(itemId: id);
+              },
+            ),
           ],
         ),
 
@@ -123,6 +141,14 @@ final GoRouter router = GoRouter(
               path: '/profile',
               name: 'profile',
               builder: (context, state) => const ProfileScreen(),
+            ),
+            GoRoute(
+              path: '/profile/item/:id',
+              name: 'profile_item',
+              builder: (context, state) {
+                final id = state.params['id']!;
+                return ProfileDetailScreen(itemId: id);
+              },
             ),
           ],
         ),
