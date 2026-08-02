@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/theme/app_theme.dart';
 
 class StoreScreen extends StatelessWidget {
   const StoreScreen({super.key});
@@ -8,37 +9,39 @@ class StoreScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Store'),
-        centerTitle: true,
-        elevation: 0,
       ),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
         children: const [
-          _StoreAppCard(
+          _StoreCard(
             name: 'Tropical Paradise',
             category: 'Wellness',
-            description: 'A peaceful virtual escape with calming visuals and soft ambient sounds.',
+            description:
+                'A peaceful virtual escape with calming visuals and soft ambient sounds.',
             rating: '4.9',
           ),
           SizedBox(height: 14),
-          _StoreAppCard(
+          _StoreCard(
             name: 'Gratitude Daily',
             category: 'Journal',
-            description: 'A gentle daily gratitude practice designed for calm and consistency.',
+            description:
+                'A gentle daily gratitude practice designed for calm and consistency.',
             rating: '4.8',
           ),
           SizedBox(height: 14),
-          _StoreAppCard(
+          _StoreCard(
             name: 'Focus Flow',
             category: 'Productivity',
-            description: 'Soft focus sessions without pressure or harsh timers.',
+            description:
+                'Soft focus sessions without pressure or harsh timers.',
             rating: '4.7',
           ),
           SizedBox(height: 14),
-          _StoreAppCard(
+          _StoreCard(
             name: 'Breath Space',
             category: 'Mindfulness',
-            description: 'Simple guided breathing with beautiful tropical atmospheres.',
+            description:
+                'Simple guided breathing with beautiful tropical atmospheres.',
             rating: '4.9',
           ),
         ],
@@ -47,13 +50,13 @@ class StoreScreen extends StatelessWidget {
   }
 }
 
-class _StoreAppCard extends StatelessWidget {
+class _StoreCard extends StatelessWidget {
   final String name;
   final String category;
   final String description;
   final String rating;
 
-  const _StoreAppCard({
+  const _StoreCard({
     required this.name,
     required this.category,
     required this.description,
@@ -62,89 +65,98 @@ class _StoreAppCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 1.5,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: Colors.grey.shade200),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    name,
-                    style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF00B4D8).withOpacity(0.12),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    category,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF00B4D8),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              description,
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey.shade700,
-                height: 1.4,
-              ),
-            ),
-            const SizedBox(height: 14),
-            Row(
-              children: [
-                const Icon(Icons.star_rounded, size: 18, color: Colors.amber),
-                const SizedBox(width: 4),
-                Text(
-                  rating,
+      padding: const EdgeInsets.all(18),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Title + Category
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  name,
                   style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: AppTheme.primarySoft,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  category,
+                  style: const TextStyle(
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    fontSize: 14,
+                    color: AppTheme.primary,
                   ),
                 ),
-                const Spacer(),
-                SizedBox(
-                  height: 36,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF00B4D8),
-                      foregroundColor: Colors.white,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                    ),
-                    child: const Text(
-                      'Get',
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-              ],
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 10),
+
+          Text(
+            description,
+            style: TextStyle(
+              fontSize: 14.5,
+              height: 1.45,
+              color: Colors.grey.shade800,
             ),
-          ],
-        ),
+          ),
+
+          const SizedBox(height: 16),
+
+          // Rating + Get button
+          Row(
+            children: [
+              const Icon(Icons.star_rounded, size: 18, color: Colors.amber),
+              const SizedBox(width: 4),
+              Text(
+                rating,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                ),
+              ),
+              const Spacer(),
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.primary,
+                  foregroundColor: Colors.white,
+                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text(
+                  'Get',
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
