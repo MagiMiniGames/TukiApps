@@ -1,52 +1,93 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'feed_provider.dart';
 
-class FeedScreen extends ConsumerWidget {
+class FeedScreen extends StatelessWidget {
   const FeedScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final items = ref.watch(feedProvider);
-
-    return SafeArea(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            child: Row(
-              children: const [
-                Text('Feed', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-                SizedBox(width: 8),
-                Expanded(child: SizedBox()),
-              ],
-            ),
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Feed'),
+        centerTitle: true,
+        elevation: 0,
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: const [
+          _AppCard(
+            title: 'Tropical Paradise',
+            subtitle: 'Shared by Lunos',
+            description: 'A calm virtual escape with beautiful visuals and soft sounds.',
           ),
-          Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: items.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 12),
-              itemBuilder: (context, index) {
-                final item = items[index];
-                return Card(
-                  child: ListTile(
-                    title: Text(item.title),
-                    subtitle: Text(item.subtitle),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios, size: 16),
-                      onPressed: () {
-                        // push onto the Feed tab's nested navigator stack
-                        context.pushNamed('feed_item', params: {'id': item.id});
-                      },
-                    ),
-                  ),
-                );
-              },
-            ),
+          SizedBox(height: 16),
+          _AppCard(
+            title: 'Gratitude Daily',
+            subtitle: 'Shared by Maya',
+            description: 'Simple daily gratitude journal with soft tropical design.',
+          ),
+          SizedBox(height: 16),
+          _AppCard(
+            title: 'Focus Flow',
+            subtitle: 'Shared by Kai',
+            description: 'Gentle focus timer designed for deep work without pressure.',
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _AppCard extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final String description;
+
+  const _AppCard({
+    required this.title,
+    required this.subtitle,
+    required this.description,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              subtitle,
+              style: TextStyle(
+                fontSize: 13,
+                color: Colors.grey.shade600,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              description,
+              style: const TextStyle(fontSize: 15),
+            ),
+            const SizedBox(height: 12),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {},
+                child: const Text('View App'),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
